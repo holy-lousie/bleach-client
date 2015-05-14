@@ -1,0 +1,312 @@
+package Cmd;
+
+
+enum EProtoId
+{
+	// 心跳包消息
+    TICK_CMD				=  	0x0000;         // 心跳包ID
+
+	// 错误消息
+	ERROR_CMD				= 	0xff00;			// 错误协议ID
+	ERROR_CODE_S			= 	0xff01;			// 错误返回码
+
+	// 登录相关
+	LOGIN_CMD				=	0x0100;			// 登录协议ID
+	VERIFY_VERSION			=	0x0101;			// 验证版本号
+	LOGIN_LOGIN_REQ			=	0x0102;			// 请求登录登录服务器
+	LOGIN_LOGIN_RET			=	0x0103;			// 登录登录服务器返回
+	LOGIN_GATEW_REQ			=	0x0104;			// 请求登录网关服务器
+	LOGIN_GATEW_RET			=	0x0105;			// 登录网关服务器返回
+	FORCE_OFFLINE			=	0x0106;			// 强制玩家下线
+	TEMP_CREDENTIAL_REQ		=	0x0107;			// 请求临时凭据
+	TEMP_CREDENTIAL_RET		=	0x0108;			// 返回临时凭据
+    LOGIN_TRANSIT_REQ       =   0x0109;         // 登录中转服务器
+    LOGIN_TRANSIT_RET       =   0x010A;         // 登录中转服务器返回
+
+
+	// 角色相关
+	ROLE_CMD				=	0x0200;			// 角色协议ID
+	SEND_ROLE_LIST			=	0x0201;			// 发送角色列表给玩家
+	SELECT_ROLE_ONLINE		=	0x0202;			// 玩家选择角色上线
+	CREATE_ROLE_REQ			=	0x0203;			// 玩家请求创建角色
+	CREATE_ROLE_RET			=	0x0204;			// 创建角色服务器返回
+	SEND_ROLE_DATA			=	0x0205;			// 发送角色数据给玩家
+    ROLE_ATTRCHANGES_S      =   0x0206;         // 角色属性变化通知
+    ROLE_GETBUFF_C          =   0x0207;         // 添加buff
+    ROLE_GETBUFF_S          =   0x0208;         // 获取buff返回
+	GOLD_MACHINE_C			=   0x0209;			// 炼金机请求
+	GOLD_MACHINE_S			=   0x0210;			// 炼金机返回
+	BUY_ENERGY_C			=   0x0211;			// 购买体力请求
+	BUY_ENERGY_S			=   0x0212;			// 购买体力返回
+	ROLE_CHANGE_NICK		=   0x0213;			// 修改用户昵称
+	BUY_USE_MB_C			=	0x0214;			// 通过梦宝谷币买东西请求
+	BUY_USE_MB_S			=	0x0215;			// 通过梦宝谷币买东西返回
+
+
+	// 场景相关
+	SCENE_CMD				=	0x0300;			// 角色协议ID
+	SCENE_ENTERCOPY_C		= 	0x0301;			// 进入副本
+	SCENE_ENTERCOPY_S		= 	0x0302;			// 进入副本(返回)
+	SCENE_COPYREADY_C		= 	0x0303;			// 准备完成
+	SCENE_STARTFIGHT_S		=	0x0304;			// 战斗开始
+	SCENE_EXITCOPY_C		= 	0x0305;			// 退出副本
+    SCENE_ENTERCITY_C       =   0x0306;         // 进入城镇
+    SCENE_ENTERSCENE_S      =   0x0307;         // 进入场景
+    SCENE_LEAVESCENE_S      =   0x0308;         // 离开场景
+    SCENE_TALKNPC_C         =   0x0309;         // 和npc对话
+    SCENE_COPYLIST_C        =   0x030a;         // 获取关卡列表id
+    SCENE_COPYLIST_S        =   0x030b;         // 获取关卡列表返回
+    SCENE_BUYITME_C         =   0x030c;         // 商城购买道具
+    SCENE_BUYITEM_S         =   0x030d;         // 商城购买道具返回
+    SCENE_REFRESHSHOP_C     =   0x030e;         // 刷新商城
+    SCENE_REFRESHSHOP_S     =   0x030f;         // 刷新商城返回
+    SCENE_GETSHOPS_C        =   0x0310;         // 获取商城物品
+    SCENE_SENDSHOPS_S       =   0x0311;         // 获取商城物品(服务器返回)
+	SCENE_BATTLEREVIVE_C	= 	0x0312;			// 战斗复活请求
+    SCENE_ENTERCOPYPK_S     =   0x0313;         // pk通知消息
+	SCENE_AGREEPK_C			= 	0x0314; 		// 同意邀请pk
+	SCENE_SWEEP_C 			= 	0x0315; 		// 请求扫荡
+	SCENE_SWEEP_S 			= 	0x0316; 		// 请求扫荡(服务器返回)
+	SCENE_BUYCOPYNUM_C		= 	0x0317; 		// 购买精英副本每日挑战次数
+	SCENE_BUYCOPYNUM_S 		= 	0x0318; 		// 购买精英副本每日挑战次数(服务器返回)
+    SCENE_CHAPTERREWARD_C   =   0x0319;         // 获取章节奖励
+    SCENE_CHAPTERREWARD_S   =   0x031a;         // 获取章节奖励返回
+    SCENE_CHAPTERREWARDINFO_C = 0x031b;         // 获取章节奖励领取情况
+    SCENE_CHAPTERREWARDINFO_S = 0x031c;         // 获取章节奖励领取情况(服务器器返回)
+
+	// 刀灵相关
+	BLADE_CMD				=	0x0400;			// 刀灵协议ID
+	SEND_BLADE_LIST			=	0x0401;			// 发送刀灵列表给玩家
+	BLADE_STRENGTH_REQ		=	0x0402;			// 刀灵强化
+	BLADE_STRENGTH_RET		=	0x0403;			// 刀灵强化服务器返回
+	BLADE_BREAK_REQ			=	0x0404;			// 刀灵突破
+	BLADE_BREAK_RET			=	0x0405;			// 刀灵突破服务器返回
+	BLADE_EXCHANGE_REQ		=	0x0406;			// 切换刀灵,战斗外部
+	BLADE_EXCHANGE_RET		=	0x0407;			// 切换刀灵服务器返回
+	BLADE_LOTTERY_REQ		=	0x0408;			// 抽取刀灵
+	BLADE_LOTTERY_RET		=	0x0409;			// 抽取刀灵服务器返回
+	SKILL_UPGRADE_REQ		=	0x040a;			// 刀灵技能升级
+	SKILL_UPGRADE_RET		=	0x040b;			// 刀灵技能升级服务器返回
+	NEW_BLADE_LIST			=	0x040c;			// 新增刀灵数据发给客户端
+	BLADE_LIBERATION_REQ	=	0x040d;			// 刀灵解放
+	BLADE_LIBERATION_RET	=	0x040e;			// 刀灵解放服务器返回
+
+
+	// 道具相关
+	ITEM_CMD				=	0x0500;			// 道具协议ID
+	SEND_ITEM_LIST			=	0x0501;			// 发送道具列表给玩家
+	PIECE_TO_BLADE_REQ		=	0x0502;			// 碎片合成刀灵
+	PIECE_TO_BLADE_RET		=	0x0503;			// 碎片合成刀灵服务器返回
+	SELL_ITEM_REQ			=	0x0504;			// 玩家请求出售道具
+	SELL_ITEM_RET			=	0x0505;			// 出售道具服务器返回
+	OPEN_ITEM_REQ			=	0x0506;			// 玩家请求打开礼包道具
+	OPEN_ITEM_RET			=	0x0507;			// 打开礼包道具服务器返回
+	NEW_ITEM_LIST			=	0x0508;			// 新增道具通知给玩家
+	UPDATE_ITEM_LIST		=	0x0509;			// 更新道具通知给玩家
+	REMOVE_ITEM_LIST		=	0x050a;			// 删除道具通知给玩家
+	PIECE_TO_SOUL_REQ		=	0x050b;			// 灵魂结晶合成灵魂
+	PIECE_TO_SOUL_RET		=	0x050c;			// 灵魂结晶合成灵魂服务器返回
+	OPEN_ALL_ITEM_REQ		=	0x050d;			// 打开所有消耗品请求
+	OPEN_ALL_ITEM_RET		=	0x050e;			// 打开所有消耗品返回
+	PIECE_TO_REFINED_REQ	=	0x050f;			// 碎片合成精魄
+	PIECE_TO_REFINED_RET	=	0x0510;			// 碎片合成精魄服务器返回
+
+
+	// 组队相关
+	TEAM_CMD				=	0x0600;			// 组队协议ID
+	CREATE_TEAM_REQ			=	0x0601;			// 玩家请求创建队伍
+	CREATE_TEAM_RET			=	0x0602;			// 创建队伍服务器返回
+	INVITE_JOIN_TEAM_REQ	=	0x0603;			// 邀请玩家请求加入指定队伍
+	INVITE_JOIN_TEAM_RET	=	0x0604;			// 邀请加入指定队伍服务器返回
+	JOIN_TEAM_REQ			=	0x0605;			// 玩家请求加入指定队伍
+	JOIN_TEAM_RET			=	0x0606;			// 加入指定队伍服务器返回
+	MATCH_TEAM_REQ			=	0x0607;			// 玩家请求快速匹配队伍
+	MATCH_TEAM_RET			=	0x0608;			// 匹配队伍服务器返回
+	QUIT_TEAM_REQ			=	0x0609;			// 玩家请求退出队伍
+	QUIT_TEAM_RET			=	0x060a;			// 退出队伍服务器返回
+	KICK_OUT_TEAM_REQ		=	0x060b;			// 踢玩家出队伍
+	KICK_OUT_TEAM_RET		=	0x060c;			// 踢玩家出队伍服务器返回
+	START_TEAM_FIGHT_REQ	=	0x060d;			// 玩家请求开始组队战斗
+	START_TEAM_FIGHT_RET	=	0x060e;			// 开始组队战斗服务器返回
+	TEAM_LIST_REQ			=	0x060f;			// 玩家请求队伍列表
+	TEAM_LIST_RET			=	0x0610;			// 服务器返回队伍列表
+
+    // 任务相关
+    QUEST_CMD               =   0x0700;         // 任务协议ID
+    GET_QUESTLIST_C         =   0x0701;         // 获取任务列表
+    GET_QUESTLIST_S         =   0x0702;         // 获取任务列表(服务器返回)
+    ACCEPT_QUEST_C          =   0x0703;         // 接受任务
+    ACCEPT_QUEST_S          =   0x0704;         // 接受任务(服务器返回)
+    SUBMIT_QUEST_C          =   0x0705;         // 提交任务
+    SUBMIT_QUEST_S          =   0x0706;         // 提交任务(服务器返回)
+    QUEST_PROGRESS_S        =   0x0707;         // 任务进度
+	GET_DAILYQUEST_C        =   0x0708;         // 获取日常任务列表
+    GET_DAILYQUEST_S 		= 	0x0709; 		// 获取日常任务列表(服务器返回)
+
+
+    // 邮件相关
+    MAIL_CMD				=   0x0800;         // 邮件协议ID
+	SEND_MAIL_LIST			=	0x0801;			// 发送邮件列表
+	SEND_NEW_MAIL			=	0x0802;			// 发送新邮件
+	ACCEPT_MAIL_REQ			=	0x0803;			// 客户端请求接收邮件
+	ACCEPT_MAIL_RET			=	0x0804;			// 接收邮件服务器返回
+
+    // 工具相关
+    UTILS_CMD				=   0x0900;         // 工具协议ID
+    SERVER_TIME_REQ			=   0x0901;         // 客户端请求服务器时间
+    SERVER_TIME_RET			=   0x0902;         // 服务器返回系统时间
+    UTILS_ECHO				=   0x0903;         // 回显协议,收到后原样返回
+
+	// 战斗相关
+	FIGHT_CMD				=	0x1000;			// 战斗协议ID
+	FIGHT_WALK_CS 			=	0x1001;			// 走路命令
+	FIGHT_RUN_CS 			= 	0x1002;			// 跑步命令
+	FIGHT_JUMP_CS 			= 	0x1003;			// 跳跃命令
+	FIGHT_DIRECT_CS 		= 	0x1004; 		// 方向变更命令
+	FIGHT_ATTACK_CS 		= 	0x1005;			// 攻击指令
+	FIGHT_READY_CS 			= 	0x1006;			// 预备命令
+	FIGHT_BLOOD_S			= 	0x1007; 		// 扣血命令
+	FIGHT_DIE_S 			= 	0x1008;			// 死亡命令
+	FIGHT_WAITRESULT_C 		= 	0x1009; 		// 等待结果命令
+	FIGHT_HIT_C 			= 	0x100a;			// 击打命令
+	FIGHT_RESULT_S 			= 	0x100b;			// 战斗结果
+	FIGHT_CALCULATE_S		= 	0x100c;			// 战斗结算
+	FIGHT_LEAVE_S			= 	0x100d;			// 离开战斗
+	FIGHT_SUSPEND_S 		= 	0x100e;			// 终止同步
+	FIGHT_SKILL_CS			= 	0x100f;			// 技能指令
+	FIGHT_WAIT4REVIVE_S 	= 	0x1010;			// 等待复活
+	FIGHT_DESTROY_S 		=	0x1011;			// 全部死亡
+	FIGHT_CROSS_C           =   0x1012;         // 战斗中切换场景
+    FIGHT_CROSS_S           =   0x1013;         // 全部切换成功开打
+	FIGHT_CHANGESWORD_C		= 	0x1014;			// 战斗中换刀
+    FIGHT_CHANGESWORD_S		= 	0x1015;			// 战斗中换刀(服务器返回)
+	FIGHT_REVIVE_S 			= 	0x1016;			// 复活
+	FIGHT_BUFF_C			= 	0x1017;			// 作用buff
+	FIGHT_ENDBUFF_C         =   0x1018;         // 结束buff
+    FIGHT_DYING_C           =   0x1019;         // 要死命令
+    FIGHT_RELEASESKILL_C 	= 	0x101A;			// 技能开始
+	FIGHT_RELEASEBULLET_C   =   0x101B;         // 飞行道具开始
+    FIGHT_ENDBULLET_C       =   0x101C;         // 飞行道具结束
+	FIGHT_SYNCWAVE_C 		= 	0x101D; 		// 同步魂屋战斗波次
+	FIGHT_SYNC_CS 			= 	0x101E;			// pvp战斗同步包
+	FIGHT_SOULFIGHT_S       =   0x101F;         // 灵魂热斗奖励返回
+    FIGHT_FIGHTAGAIN_C      =   0x1020;         // pve副本再来一次
+    FIGHT_FIGHTAGAIN_S      =   0x1021;         // pve副本再来一次返回
+    // TODO
+
+	// 聊天相关
+	CHAT_CMD				=	0x1100;			// 聊天协议ID
+	CHAT_PRIVATE_REQ		=	0x1101;			// 客户端发起私聊
+    CHAT_INVITEPK_REQ       =   0x1102;         // 邀请真人pk
+    CHAT_INVITEPK_RET       =   0x1103;         // 邀请真人pk返回
+
+	// 灵魂相关
+	SOUL_CMD				=	0x1200;			// 灵魂协议ID
+	SEND_SOUL_LIST			=	0x1201;			// 发送灵魂列表给客户端
+	SOUL_SET_CAPACITY_REQ	=	0x1202;			// 灵魂背包扩容
+	SOUL_SET_CAPACITY_RET	=	0x1203;			// 灵魂背包扩容服务器返回
+	SOUL_EQUIP_REQ			=	0x1204;			// 装备灵魂
+	SOUL_EQUIP_RET			=	0x1205;			// 装备灵魂服务器返回
+	SOUL_MERGE_REQ			=	0x1206;			// 灵魂融合
+	SOUL_MERGE_RET			=	0x1207;			// 灵魂融合服务器返回
+	SOUL_EVOLUT_REQ			=	0x1208;			// 灵魂进化
+	SOUL_EVOLUT_RET			=	0x1209;			// 灵魂进化服务器返回
+	NEW_SOUL_LIST			=	0x120a;			// 新增灵魂列表
+	SOUL_UPGRADE_REQ		=   0x120b;			// 灵魂升阶请求
+	SOUL_UPGRADE_RET		=   0x120c;			// 灵魂升阶返回
+
+	//灵魂热斗相关
+	SOULFIGHT_INFO_REQ		=   0x1210;			//请求灵魂热斗信息
+	SOULFIGHT_INFO_RET		=	0x1211;			//返回灵魂热斗信息
+	SOULFIGHT_REFRESH_REQ   =	0x1212;			//刷新灵魂热斗请求
+	SOULFIGHT_REFRESH_RET   =	0x1213;			//刷新灵魂热斗返回
+	SOULFIGHT_DRAW_REQ		=	0x1214;			//抽卡请求
+	SOULFIGHT_DRAW_RET		=	0x1215;			//抽卡返回
+	SOULFIGHT_BEGIN_REQ		=	0x1216;			//开始灵魂战斗请求
+	SOULFIGHT_BEGIN_RET		=	0x1217;			//成功灵魂热斗返回
+	SOULFIGHT_EQUIP_BLADE_REQ = 0x1218;			//装备刀请求
+	SOULFIGHT_EQUIP_BLADE_RET = 0x1219;			//装备刀返回
+
+	// 竞技场相关
+	ARENA_CMD					=	0x1300;			// 竞技场协议ID
+	ARENA_INFO_REQ				=	0x1301;			// 请求玩家竞技场数据
+	ARENA_INFO_RET				=	0x1302;			// 返回玩家竞技场数据
+	ARENA_RANDOM_ROLE_REQ		=	0x1303;			// 请求随机玩家
+	ARENA_RANDOM_ROLE_RET		=	0x1304;			// 请求随机玩家服务器返回
+	ARENA_FIGHT_REQ				=	0x1305;			// 请求挑战玩家
+	//ARENA_FIGHT_RET			=	0x1306;			// 请求挑战玩家服务器返回
+	ARENA_BUY_TIMES_REQ			=	0x1307;			// 请求购买挑战次数
+	ARENA_BUY_TIMES_RET			=	0x1308;			// 请求购买挑战次数服务器返回
+	ARENA_CLEAR_CD_REQ			=	0x1309;			// 请求清除冷却时间
+	ARENA_CLEAR_CD_RET			=	0x130a;			// 请求清除冷却时间服务器返回
+	ARENA_RANK_LIST_REQ			=	0x130b;			// 请求竞技场排行榜
+	ARENA_RANK_LIST_RET			=	0x130c;			// 请求竞技场排行榜服务器返回
+	ARENA_ROLE_INFO_REQ			=	0x130d;			// 请求竞技场玩家信息
+	ARENA_ROLE_INFO_RET			=	0x130e;			// 返回竞技场玩家信息
+	//ARENA_SOUL_EQUIP_REQ		=	0x130f;			// 灵魂装备
+	//ARENA_SOUL_EQUIP_RET		=	0x1310;			// 灵魂装备返回
+	ARENA_GIVE_UP_MATCHED		=	0x1311;			// 放弃挑战匹配的对手
+	ARENA_RANK_NTF				=	0x1312;			// 通知玩家的竞技场排名
+	ARENA_RECORDS_REQ 			= 	0x1313; 		// 获取竞技场战报
+	ARENA_RECORDS_RET			= 	0x1314; 		// 获取竞技场战报返回
+
+
+	//死神试练相关
+	TRAINING_CMD				=	0x1400;			// 死神试练相关
+	COMMANDPHONE_INFO_REQ		=	0x1401;			// 传令神机获取信息
+	COMMANDPHONE_INFO_RSP		=	0x1402;			// 传令神机返回信息
+	ENTER_COMMANDPHONE_REQ		=	0x1403;			// 请求传令神机战斗
+	SOULROOM_INFO_REQ			=	0x1404;			// 魂屋系统获取信息
+	SOULROOM_INFO_RSP			=	0x1405;			// 魂屋系统返回信息
+	ENTER_SOULROOM_REQ			=	0x1406;			// 进入魂屋系统
+
+	//扭蛋相关
+	GACHA_CMD					=	0x1500;			// 扭蛋相关
+	GACHA_INFO_REQ				=	0x1501;			// 扭蛋信息请求
+	GACHA_INFO_RET				=	0x1502;			// 扭蛋信息返回
+	GACHA_EXEC_REQ				=	0x1503;			// 扭蛋执行请求
+	GACHA_EXEC_RET				=	0x1504;			// 扭蛋执行返回
+
+	//浦原商店相关
+	SHOP_CMD					=	0x1600;			// 浦原商店相关
+	SHOP_INFO_REQ				=	0x1601;			// 浦原商店信息请求
+	SHOP_INFO_RET				=	0x1602;			// 浦原商店信息返回
+	SHOP_BUY_ITEM_REQ			=	0x1603;			// 购买物品请求
+	SHOP_BUY_ITEM_RET			=	0x1604;			// 购买物品返回
+	SHOP_REFRESH_REQ			=	0x1605;			// 消耗金币刷新商店请求
+	SHOP_REFRESH_RET			=	0x1606;			// 消耗金币刷新商店返回
+
+	//排行榜
+	RANK_CMD					=	0x1700;
+	RANK_BP_REQ					=   0x1701;			//战斗力排行榜请求
+	RANK_BP_RET					=   0x1702;			//战斗力排行榜返回
+
+	//活动系统
+	ACTIVITY_CMD				=	0x1800;
+	ACTIVITY_INFO_REQ			=   0x1801;			//请求活动信息
+	ACTIVITY_INFO_RET			=   0x1802;			//返回活动信息
+	DAILY_SIGN_REQ				=	0x1803;			//每日签到
+	DAILY_SIGN_RET				=	0x1804;			//每日签到返回
+	SPA_REQ						=	0x1805;         //泡温泉
+	SPA_RET						=	0x1806;			//泡温泉返回
+	MONTHCARD_BUY_REQ			=	0x1807;			//月卡购买
+	MONTHCARD_BUY_RET			=	0x1808;			//月卡购买返回
+	MONTHCARD_REWARD_REQ		=	0x1809;			//月卡领取每日奖励
+	MONTHCARD_REWARD_RET		=	0x1810;			//月卡领取每日奖励返回
+}
+
+
+message RoleAvatar
+{
+	required uint64		roleid	=	1;		// 角色id
+	required int32		dress	=	2;      // 时装
+}
+
+/**
+ *	@brief	灵魂装备位置结构
+ */
+message SoulIndex
+{
+	required uint64 thisid		=	1;		// 灵魂实例id
+	required uint32 equipindex	=	2;		// 新的装备位置 0-拆卸 1-装上
+}
