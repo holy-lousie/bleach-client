@@ -1,6 +1,6 @@
 {
   "name": "bleach-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "bleach-client",
   "author": "<yong.liu@dena.com>",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/holylousie/bleach-client"
   },
   "dependencies": {
-    "dena-bytebuffer": "0.1.0",
+    "dena-bytebuffer": "*",
     "protobufjs": "4.0.0-b2"
   }
 }
